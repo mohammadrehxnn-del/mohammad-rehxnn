@@ -996,17 +996,24 @@ function Admin() {
     else setMessage(error.message);
   }
 
-  async function login(e) {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+async function login(e) {
+  e.preventDefault();
+  const fd = new FormData(e.currentTarget);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: fd.get('email'),
-      password: fd.get('password')
-    });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: fd.get('email'),
+    password: fd.get('password')
+  });
 
-    setMessage(error ? error.message : '');
+  if (error) {
+    setMessage(error.message);
+    setSession(null);
+    return;
   }
+
+  setSession(data.session);
+  setMessage('');
+}
 
   async function saveProject(e) {
     e.preventDefault();
@@ -1150,7 +1157,13 @@ function Admin() {
     <div className="admin-page">
       <div className="admin-top">
         <a className="admin-back" href="/#home">← View portfolio</a>
-        <button onClick={() => supabase.auth.signOut()} className="signout">
+      <button
+  onClick={async () => {
+    await supabase.auth.signOut({ scope: 'local' });
+    setSession(null);
+  }}
+  className="signout"
+>
           <LogOut size={15} /> Sign out
         </button>
       </div>
