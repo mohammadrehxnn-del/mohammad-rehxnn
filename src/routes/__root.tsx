@@ -91,6 +91,14 @@ export const Route = createRootRouteWithContext<{
         name: "google-site-verification",
         content: "Vbe9Fs6emWAOmaAhtobnpFcgbRplpp4mIH5z9nuET70",
       },
+      {
+        title: "Mohammad Rehxnn | Video Editor & Visual Storyteller",
+      },
+      {
+        name: "description",
+        content:
+          "Mohammad Rehxnn is a video editor and visual storyteller specializing in cinematic video editing, wedding films, color grading and creative visual content.",
+      },
     ],
 
     scripts: [
@@ -100,12 +108,12 @@ export const Route = createRootRouteWithContext<{
           "@context": "https://schema.org",
           "@type": "Person",
           "@id": "https://mohammad-rehxnn.vercel.app/#person",
-          name: "Mohammad Rehan Khan",
-          alternateName: "Mohammad Rehxnn",
+          name: "Mohammad Rehxnn",
+          alternateName: "Mohammad Rehan Khan",
           url: "https://mohammad-rehxnn.vercel.app/",
           jobTitle: "Video Editor and Visual Storyteller",
           description:
-            "Mohammad Rehan Khan, professionally known as Mohammad Rehxnn, is a video editor and visual storyteller specializing in cinematic video editing, wedding films, color grading and creative visual content.",
+            "Mohammad Rehxnn, also known as Mohammad Rehan Khan, is a video editor and visual storyteller specializing in cinematic video editing, wedding films, color grading and creative visual content.",
           knowsAbout: [
             "Video Editing",
             "Cinematic Video Editing",
