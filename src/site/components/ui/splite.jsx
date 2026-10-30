@@ -1,16 +1,76 @@
-import React, { Suspense, lazy, useCallback, useEffect, useRef } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 
-const Spline = lazy(() => import('@splinetool/react-spline'));
+// Runtime sirf tab download hoga jab zarurat padegi
+const importSpline = () => import('@splinetool/react-spline');
+const Spline = lazy(importSpline);
 
-export function SplineScene({ scene, className = '' }) {
+// Slow net / data saver / mobile (agar poster-only mode ho) pe 3D skip karne ka check
+function shouldSkip3D(poster, mobileMode) {
+  if (typeof window === 'undefined' || !poster) return false;
+  const nav = navigator;
+  const c = nav.connection || {};
+  const slow = c.saveData === true || ['slow-2g', '2g'].includes(c.effectiveType);
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  return slow || (isMobile && mobileMode === 'poster-only');
+}
+
+/**
+ * Props:
+ *  scene       : Spline scene URL (pehle jaisa)
+ *  className   : pehle jaisa
+ *  poster      : (optional) chhoti .webp image, e.g. "/hero-poster.webp"
+ *  mobile      : (optional) "lazy" (default) ya "poster-only"
+ */
+export function SplineScene({ scene, className = '', poster, mobile = 'lazy' }) {
   const hostRef = useRef(null);
   const splineRef = useRef(null);
   const targetRef = useRef(null);
   const originalRotation = useRef(null);
   const rafRef = useRef(0);
 
+  const [load, setLoad] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [skip, setSkip] = useState(false);
+
+  useEffect(() => {
+    setSkip(shouldSkip3D(poster, mobile));
+  }, [poster, mobile]);
+
+  // Spline server se connection pehle hi khol do
+  useEffect(() => {
+    try {
+      const origin = new URL(scene).origin;
+      if (document.head.querySelector(`link[rel="preconnect"][href="${origin}"]`)) return;
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = origin;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+    } catch (_) {}
+  }, [scene]);
+
+  // Screen ke paas aane pe hi load shuru
+  useEffect(() => {
+    if (skip) return;
+    const host = hostRef.current;
+    if (!host) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry || !entry.isIntersecting) return;
+        io.disconnect();
+        const start = () => { importSpline(); setLoad(true); };
+        if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1200 });
+        else setTimeout(start, 50);
+      },
+      { rootMargin: '400px' }
+    );
+    io.observe(host);
+    return () => io.disconnect();
+  }, [skip]);
+
   const onLoad = useCallback((app) => {
     splineRef.current = app;
+    setReady(true);
     // Prefer rotating the head/face object in the Spline scene, when it is named.
     const candidates = ['Head', 'head', 'Face', 'face', 'Robot Head', 'Robot_Head', 'RobotHead'];
     let target = null;
@@ -24,7 +84,10 @@ export function SplineScene({ scene, className = '' }) {
     }
   }, []);
 
+  // Mouse tracking sirf tab chalu jab 3D load ho chuka ho aur device pe mouse ho
   useEffect(() => {
+    if (!load || skip) return;
+    if (window.matchMedia('(hover: none)').matches) return; // touch device pe zarurat nahi
     const host = hostRef.current;
     if (!host) return;
     let nx = 0, ny = 0;
@@ -55,14 +118,37 @@ export function SplineScene({ scene, className = '' }) {
     };
     window.addEventListener('pointermove', move, { passive: true });
     window.addEventListener('blur', reset);
-    return () => { window.removeEventListener('pointermove', move); window.removeEventListener('blur', reset); if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, []);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('blur', reset);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [load, skip]);
+
+  const placeholder = poster ? (
+    <img
+      src={poster}
+      alt=""
+      decoding="async"
+      fetchPriority="high"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+    />
+  ) : (
+    <div className="spline-loader" role="status" aria-label="Loading 3D scene"><span className="loader" /></div>
+  );
 
   return (
     <div ref={hostRef} className="spline-look-tracker">
-      <Suspense fallback={<div className="spline-loader" role="status" aria-label="Loading 3D scene"><span className="loader" /></div>}>
-        <Spline scene={scene} className={className} onLoad={onLoad} />
-      </Suspense>
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {!ready && placeholder}
+        {load && !skip && (
+          <Suspense fallback={null}>
+            <div style={{ width: '100%', height: '100%', opacity: ready ? 1 : 0, transition: 'opacity .6s ease' }}>
+              <Spline scene={scene} className={className} onLoad={onLoad} />
+            </div>
+          </Suspense>
+        )}
+      </div>
     </div>
   );
 }
