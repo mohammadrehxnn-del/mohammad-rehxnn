@@ -555,7 +555,7 @@ function PersonalProfile() {
           overflow: hidden;
           padding: 110px 8%;
           background:
-            radial-gradient(ellipse at 78% 50%, rgba(49, 91, 180, .16), transparent 42%),
+            radial-gradient(ellipse at 78% 50%, rgba(255,255,255,.055), transparent 42%),
             #08090d;
           border-top: 1px solid rgba(255,255,255,.07);
           border-bottom: 1px solid rgba(255,255,255,.07);
@@ -569,7 +569,7 @@ function PersonalProfile() {
           right: 5%;
           top: 10%;
           border-radius: 50%;
-          background: rgba(48, 92, 190, .12);
+          background: rgba(255,255,255,.04);
           filter: blur(100px);
           z-index: -1;
           pointer-events: none;
@@ -608,9 +608,9 @@ function PersonalProfile() {
           position: absolute;
           width: 320px;
           height: 320px;
-          border: 1px solid rgba(125,155,255,.2);
+          border: 1px solid rgba(255,255,255,.18);
           border-radius: 50%;
-          box-shadow: 0 0 90px rgba(56,100,220,.12);
+          box-shadow: 0 0 90px rgba(255,255,255,.06);
           animation: profileOrbit 12s linear infinite;
         }
 
@@ -627,7 +627,7 @@ function PersonalProfile() {
         }
 
         .personal-profile-image:hover {
-          filter: drop-shadow(0 20px 65px rgba(70,110,255,.28));
+          filter: drop-shadow(0 20px 65px rgba(255,255,255,.16));
           transform: scale(1.025);
         }
 
@@ -639,7 +639,7 @@ function PersonalProfile() {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          color: #9bb7ff;
+          color: #858585;
           font-size: 11px;
           letter-spacing: .18em;
           margin-bottom: 22px;
@@ -649,7 +649,7 @@ function PersonalProfile() {
           content: "";
           width: 24px;
           height: 1px;
-          background: #9bb7ff;
+          background: #858585;
         }
 
         .personal-profile-copy h2 {
@@ -696,7 +696,7 @@ function PersonalProfile() {
 
         .personal-profile-social:hover {
           border-color: #9bb7ff;
-          background: rgba(100,140,255,.1);
+          background: rgba(255,255,255,.06);
           transform: translateY(-3px);
         }
 
