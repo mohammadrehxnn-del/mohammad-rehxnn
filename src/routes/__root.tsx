@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{
       {
         name: "description",
         content:
-          "Mohammad Rehxnn is a video editor and visual storyteller specializing in cinematic video editing, wedding films, color grading and creative visual content.",
+          "Mohammad Rehxnn is a video editor and visual storyteller. Explore cinematic video editing, wedding films, color grading and creative work by Mohammad Rehxnn and Creative Novary.",
       },
     ],
 
@@ -114,6 +114,9 @@ export const Route = createRootRouteWithContext<{
           jobTitle: "Video Editor and Visual Storyteller",
           description:
             "Mohammad Rehxnn, also known as Mohammad Rehan Khan, is a video editor and visual storyteller specializing in cinematic video editing, wedding films, color grading and creative visual content.",
+          sameAs: [
+            "https://www.instagram.com/mohammad_rehxnn/",
+          ],
           knowsAbout: [
             "Video Editing",
             "Cinematic Video Editing",
@@ -126,8 +129,22 @@ export const Route = createRootRouteWithContext<{
             "DaVinci Resolve",
             "CapCut",
             "Alight Motion",
-            "Higgsfield"
-          ]
+            "Higgsfield",
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://mohammad-rehxnn.vercel.app/#creative-novary",
+          name: "Creative Novary",
+          description:
+            "Creative Novary is a video editing agency and creative studio focused on video editing and creative visual content.",
+          sameAs: [
+            "https://www.instagram.com/creative_novary/",
+          ],
         }),
       },
     ],
@@ -187,3 +204,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
