@@ -952,23 +952,35 @@ function Admin() {
   const [editing, setEditing] = useState(null);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
+ useEffect(() => {
+  let active = true;
+
+  async function resetAdminSession() {
     if (!supabase) {
       setLoading(false);
       return;
     }
 
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
+    const { error } = await supabase.auth.signOut({
+      scope: 'local'
     });
 
-    const {
-      data: { subscription }
-    } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
+    if (!active) return;
 
-    return () => subscription.unsubscribe();
-  }, []);
+    setSession(null);
+    setLoading(false);
+
+    if (error) {
+      setMessage('Session reset failed. Please refresh and try again.');
+    }
+  }
+
+  resetAdminSession();
+
+  return () => {
+    active = false;
+  };
+}, []);
 
   useEffect(() => {
     if (session) loadProjects();
