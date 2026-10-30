@@ -1,3 +1,4 @@
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -18,7 +19,9 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">
+          Page not found
+        </h2>
         <p className="mt-2 text-sm text-muted-foreground">
           The page you're looking for doesn't exist or has been moved.
         </p>
@@ -38,8 +41,11 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
+
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    reportLovableError(error, {
+      boundary: "tanstack_root_error_component",
+    });
   }, [error]);
 
   return (
@@ -73,31 +79,77 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#050505" },
       {
-  name: "google-site-verification",
-  content: "Vbe9Fs6emWAOmaAhtobnpFcgbRplpp4mIH5z9nuET70",
-},
+        name: "google-site-verification",
+        content: "Vbe9Fs6emWAOmaAhtobnpFcgbRplpp4mIH5z9nuET70",
+      },
     ],
+
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://mohammad-rehxnn.vercel.app/#person",
+          name: "Mohammad Rehan Khan",
+          alternateName: "Mohammad Rehxnn",
+          url: "https://mohammad-rehxnn.vercel.app/",
+          jobTitle: "Video Editor and Visual Storyteller",
+          description:
+            "Mohammad Rehan Khan, professionally known as Mohammad Rehxnn, is a video editor and visual storyteller specializing in cinematic video editing, wedding films, color grading and creative visual content.",
+          knowsAbout: [
+            "Video Editing",
+            "Cinematic Video Editing",
+            "Wedding Film Editing",
+            "Color Grading",
+            "Visual Storytelling",
+            "Adobe Premiere Pro",
+            "Adobe Photoshop",
+            "Adobe After Effects",
+            "DaVinci Resolve",
+            "CapCut",
+            "Alight Motion",
+            "Higgsfield"
+          ]
+        }),
+      },
+    ],
+
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/robot-hero.webp", type: "image/webp" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "icon",
+        href: "/robot-hero.webp",
+        type: "image/webp",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap",
       },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -123,7 +175,6 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
