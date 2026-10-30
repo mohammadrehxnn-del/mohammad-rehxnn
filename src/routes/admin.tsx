@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminPanel } from "@/site/AdminPanel";
+import "@/site/style.css";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
