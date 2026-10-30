@@ -504,7 +504,7 @@ function CreativeBrand() {
       <div className="brand-glow" />
 
       <div className="section-kicker">
-        <span>04 / CREATIVE NOVALS</span>
+        <span>04 / CREATIVE NOVARY</span>
         <span>MY CREATIVE SPACE</span>
       </div>
 
@@ -521,7 +521,7 @@ function CreativeBrand() {
 
         <div>
           <span className="eyebrow-text">A BRAND IN THE MAKING</span>
-          <h2>Creative<br /><em>Novals.</em></h2>
+          <h2>Creative<br /><em>Novary.</em></h2>
           <p>
             A growing creative space exploring digital design, visual content, AI-powered ideas, and new ways to make the internet feel more human.
           </p>
@@ -841,7 +841,7 @@ function Contact() {
   return (
     <section className="section contact-section" id="contact">
       <div className="section-kicker">
-        <span>05 / LET'S CONNECT</span>
+        <span>06 / LET'S CONNECT</span>
         <span>GOOD THINGS START WITH A CONVERSATION</span>
       </div>
 
@@ -1321,7 +1321,7 @@ function App() {
           href="https://www.instagram.com/creative_novary/"
           target="_blank"
           rel="noreferrer"
-          aria-label="Creative Novals Instagram"
+          aria-label="Creative Novary Instagram"
         >
           <Instagram size={15} />
         </a>
