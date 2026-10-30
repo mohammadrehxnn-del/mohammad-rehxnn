@@ -106,3 +106,28 @@
 @media(prefers-reduced-motion:reduce){.reel-card,.reel-cover:before,.reel-cover:after,.reel-cover-art,.reel-play,.novals-symbol img{transition:none!important}}
 .hero h1 span{background:inherit;-webkit-background-clip:text;background-clip:text;color:transparent}
 .reel-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .6s ease}.reel-cover:hover .reel-thumb{transform:scale(1.05)}.reel-cover .reel-type,.reel-cover .reel-play,.reel-cover .reel-number{z-index:2}
+/* Creative Novary — Black & Silver Theme */
+.creative-brand {
+  background: #050505 !important;
+}
+
+.creative-brand .brand-glow {
+  background: radial-gradient(
+    ellipse,
+    rgba(255,255,255,.10),
+    transparent 63%
+  ) !important;
+}
+
+.creative-brand h2 {
+  color: #F5F5F5;
+  text-shadow: 0 0 28px rgba(255,255,255,.07);
+}
+
+.creative-brand h2 em {
+  color: #858585 !important;
+}
+
+.novals-symbol img {
+  filter: drop-shadow(0 0 24px rgba(255,255,255,.10));
+}
