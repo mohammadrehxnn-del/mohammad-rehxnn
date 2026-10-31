@@ -554,9 +554,7 @@ function PersonalProfile() {
           isolation: isolate;
           overflow: hidden;
           padding: 110px 8%;
-          background:
-            radial-gradient(ellipse at 78% 50%, rgba(255,255,255,.055), transparent 42%),
-            #08090d;
+         background: #000000;
           border-top: 1px solid rgba(255,255,255,.07);
           border-bottom: 1px solid rgba(255,255,255,.07);
         }
@@ -569,7 +567,7 @@ function PersonalProfile() {
           right: 5%;
           top: 10%;
           border-radius: 50%;
-          background: rgba(255,255,255,.04);
+          background: transparent;
           filter: blur(100px);
           z-index: -1;
           pointer-events: none;
