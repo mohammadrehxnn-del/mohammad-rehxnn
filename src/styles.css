@@ -142,3 +142,13 @@
     color: var(--color-foreground);
   }
 }
+html,
+body,
+#root {
+  background: #000000 !important;
+}
+
+section,
+main {
+  background-color: #000000;
+}
